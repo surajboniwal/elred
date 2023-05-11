@@ -1,7 +1,7 @@
-import 'package:elred/presentation/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
-import './helpers/auth_helper.dart';
+import '../../screens.dart';
+import '../helpers/auth_helper.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});

@@ -1,4 +1,4 @@
-import 'package:elred/presentation/screens/screens.dart';
+import 'package:elred/features/screens.dart';
 import 'package:flutter/material.dart';
 
 class RouteGenerator {

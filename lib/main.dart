@@ -1,4 +1,4 @@
-import 'package:elred/presentation/screens/screens.dart';
+import 'package:elred/features/screens.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
