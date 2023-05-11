@@ -9,8 +9,11 @@ class TodoProvider extends ChangeNotifier {
   final BaseTodoRepository _todoRepository;
   bool loading = true;
 
-  TodoProvider(this._todoRepository) {
-    getTodos();
+  TodoProvider(this._todoRepository);
+
+  void clearState() {
+    todos.clear();
+    loading = true;
   }
 
   Future<void> addTodo(Todo todo) async {

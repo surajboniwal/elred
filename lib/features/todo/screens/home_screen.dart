@@ -9,10 +9,21 @@ import '../../screens.dart';
 import '../widgets/home_header.dart';
 import '../widgets/todo_tile.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   static const String id = "/home";
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<TodoProvider>().getTodos();
+  }
 
   @override
   Widget build(BuildContext context) {

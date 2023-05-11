@@ -21,7 +21,7 @@ class AuthHelper {
         idToken: authentication.idToken,
       );
 
-      FirebaseAuth.instance.signInWithCredential(creds);
+      await FirebaseAuth.instance.signInWithCredential(creds);
 
       return true;
     } catch (err) {
@@ -31,7 +31,8 @@ class AuthHelper {
 
   static Future<bool> logout() async {
     try {
-      FirebaseAuth.instance.signOut();
+      await _googleSignIn.disconnect();
+      await FirebaseAuth.instance.signOut();
       return true;
     } catch (err) {
       return false;

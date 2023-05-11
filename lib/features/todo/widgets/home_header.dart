@@ -3,6 +3,7 @@ import 'package:elred/features/auth/screens/login_screen.dart';
 import 'package:elred/features/todo/providers/todo_provider.dart';
 import 'package:elred/shared/extensions/list_todo.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 class HomeHeader extends StatelessWidget {
@@ -30,6 +31,8 @@ class HomeHeader extends StatelessWidget {
             child: GestureDetector(
               onTap: () async {
                 await AuthHelper.logout();
+                GetIt.I.reset();
+                context.read<TodoProvider>().clearState();
                 Navigator.of(context).pushNamedAndRemoveUntil(LoginScreen.id, (route) => false);
               },
               child: Container(
