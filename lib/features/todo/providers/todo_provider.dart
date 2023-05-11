@@ -7,6 +7,7 @@ class TodoProvider extends ChangeNotifier {
   final List<Todo> todos = [];
 
   final BaseTodoRepository _todoRepository;
+  bool loading = true;
 
   TodoProvider(this._todoRepository) {
     getTodos();
@@ -36,6 +37,7 @@ class TodoProvider extends ChangeNotifier {
   Future<void> getTodos() async {
     final t = await _todoRepository.getTodos();
     todos.addAll(t);
+    loading = false;
     notifyListeners();
   }
 }

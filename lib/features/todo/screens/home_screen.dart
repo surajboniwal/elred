@@ -1,6 +1,7 @@
 import 'package:elred/features/todo/providers/todo_provider.dart';
 import 'package:elred/shared/extensions/list_todo.dart';
 import 'package:elred/shared/theme/app_colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -44,6 +45,35 @@ class HomeScreen extends StatelessWidget {
             Consumer<TodoProvider>(
               builder: (context, todoProvider, child) {
                 final todos = todoProvider.todos.pending.sorted;
+                if (todoProvider.loading) {
+                  return const Center(
+                    child: CupertinoActivityIndicator(),
+                  );
+                }
+                if (todos.isEmpty) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(
+                        "assets/images/no_data.png",
+                        height: 130,
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 24.0),
+                        alignment: Alignment.center,
+                        child: const Text(
+                          "You have no tasks to do\nEnjoy your day!",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 16.0,
+                            letterSpacing: 0.3,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                }
                 return ListView.separated(
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,

@@ -4,6 +4,7 @@ class AppTheme {
   static ThemeData get theme {
     return ThemeData(
       fontFamily: "Poppins",
+      scaffoldBackgroundColor: Colors.white,
     );
   }
 }

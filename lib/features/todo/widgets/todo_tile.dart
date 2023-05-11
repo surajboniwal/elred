@@ -1,4 +1,5 @@
 import 'package:elred/features/todo/providers/todo_provider.dart';
+import 'package:elred/shared/extensions/date_time.dart';
 import 'package:elred/shared/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,10 @@ class TodoTile extends StatelessWidget {
           "todo": todo,
         });
       },
+      trailing: Text(
+        todo.date.formatted,
+        style: const TextStyle(color: Colors.grey, fontSize: 12.0),
+      ),
       leading: TodoTileCheckbox(
         todo: todo,
       ),
