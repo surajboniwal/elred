@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/todo.dart';
 
 abstract class BaseTodoRepository {
-  Future<String> createTodo(Todo todo);
+  Future<void> createTodo(Todo todo);
   Future<void> removeTodo(String id);
   Future<void> editTodo(Todo todo);
   Future<List<Todo>> getTodos();
@@ -13,10 +13,9 @@ class TodoRepository implements BaseTodoRepository {
   final firestore = FirebaseFirestore.instance;
 
   @override
-  Future<String> createTodo(Todo todo) async {
+  Future<void> createTodo(Todo todo) async {
     final todos = firestore.collection('users').doc("suraj").collection('todos');
-    final todo0 = await todos.add(todo.toMap());
-    return todo0.id;
+    await todos.doc(todo.id).set(todo.toMap());
   }
 
   @override

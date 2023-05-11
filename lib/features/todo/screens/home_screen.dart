@@ -1,7 +1,8 @@
-import 'package:elred/features/todo/models/todo.dart';
 import 'package:elred/features/todo/providers/todo_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../screens.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -13,18 +14,22 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await context.read<TodoProvider>().addTodo(
-                Todo(task: "task", date: DateTime.now(), completed: false),
-              );
+          Navigator.of(context).pushNamed(AddTodoScreen.id);
         },
       ),
       body: Consumer<TodoProvider>(
         builder: (context, todoProvider, child) {
+          final todos = todoProvider.todos;
           return ListView.builder(
-            itemCount: todoProvider.todos.length,
+            itemCount: todos.length,
             itemBuilder: (context, index) {
               return ListTile(
-                title: Text(todoProvider.todos[index].task),
+                onTap: () {
+                  Navigator.of(context).pushNamed(AddTodoScreen.id, arguments: {
+                    "todo": todos[index],
+                  });
+                },
+                title: Text(todos[index].task),
               );
             },
           );

@@ -1,4 +1,5 @@
 import 'package:elred/features/todo/providers/todo_provider.dart';
+import 'package:elred/shared/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
@@ -13,16 +14,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<TodoProvider>(
-      create: (context) => GetIt.I(),
-      child: MaterialApp(
-        title: 'elRed',
-        onGenerateRoute: RouteGenerator.onGenerateRoute,
-        initialRoute: initialRoute,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        debugShowCheckedModeBanner: false,
-      ),
-    );
+        create: (context) => GetIt.I(),
+        builder: (context, child) {
+          return MaterialApp(
+            title: 'elRed',
+            onGenerateRoute: RouteGenerator.onGenerateRoute,
+            initialRoute: initialRoute,
+            theme: AppTheme.theme,
+            debugShowCheckedModeBanner: false,
+          );
+        });
   }
 }
