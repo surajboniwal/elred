@@ -131,7 +131,8 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
                     const SizedBox(height: 12.0),
                     AppTextField(
                       controller: descriptionController,
-                      hint: "Description",
+                      hint: "Description (Optional)",
+                      isRequired: false,
                     ),
                     const SizedBox(height: 12.0),
                     AppTextField(
@@ -163,6 +164,8 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
             const SizedBox(height: 32.0),
             GestureDetector(
               onTap: () async {
+                FocusManager.instance.primaryFocus?.unfocus();
+
                 if (formKey.currentState?.validate() == true) {
                   if (widget.todo == null) {
                     await context.read<TodoProvider>().addTodo(

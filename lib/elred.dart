@@ -14,15 +14,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<TodoProvider>(
-        create: (context) => GetIt.I(),
-        builder: (context, child) {
-          return MaterialApp(
+      create: (context) => GetIt.I(),
+      builder: (context, child) {
+        return GestureDetector(
+          onTap: () {
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: MaterialApp(
             title: 'elRed',
             onGenerateRoute: RouteGenerator.onGenerateRoute,
             initialRoute: initialRoute,
             theme: AppTheme.theme,
             debugShowCheckedModeBanner: false,
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }

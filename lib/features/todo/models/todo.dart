@@ -52,7 +52,7 @@ class Todo {
       id: map['id'],
       task: map['task'] ?? '',
       description: map['description'] ?? '',
-      date: DateTime.fromMillisecondsSinceEpoch(map['date']),
+      date: DateTime.parse(map['date']),
       completed: map['completed'] ?? false,
     );
   }

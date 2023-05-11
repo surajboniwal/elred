@@ -59,6 +59,11 @@ class AppTextField extends StatelessWidget {
               color: Colors.amber,
             ),
           ),
+          focusedErrorBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.amber,
+            ),
+          ),
           hintStyle: TextStyle(
             color: Colors.white.withOpacity(0.4),
           ),
