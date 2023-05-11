@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "881643832834",
+    "project_id": "elred-1ffe9",
+    "storage_bucket": "elred-1ffe9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:881643832834:android:d89c44b0522ca0a9d9091b",
+        "android_client_info": {
+          "package_name": "com.surajboniwal.elred"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "881643832834-8uuk3is0to5f8n20ksthmutuejlrc4kv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.surajboniwal.elred",
+            "certificate_hash": "a8e1a1eb1c1a40dd52466d423a6789514f539861"
+          }
+        },
+        {
+          "client_id": "881643832834-i01005nmbfoopl17tqvugm8fusosc7ki.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoxjL3f064jOT7t6wbTVBG37uyfNAaVEc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "881643832834-i01005nmbfoopl17tqvugm8fusosc7ki.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
