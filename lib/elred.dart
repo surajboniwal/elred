@@ -1,4 +1,7 @@
+import 'package:elred/features/todo/providers/todo_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 
 import 'core/route_generator.dart';
 
@@ -9,14 +12,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'elRed',
-      onGenerateRoute: RouteGenerator.onGenerateRoute,
-      initialRoute: initialRoute,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return ChangeNotifierProvider<TodoProvider>(
+      create: (context) => GetIt.I(),
+      child: MaterialApp(
+        title: 'elRed',
+        onGenerateRoute: RouteGenerator.onGenerateRoute,
+        initialRoute: initialRoute,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        debugShowCheckedModeBanner: false,
       ),
-      debugShowCheckedModeBanner: false,
     );
   }
 }

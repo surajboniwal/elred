@@ -1,7 +1,7 @@
+import 'package:elred/features/todo/models/todo.dart';
+import 'package:elred/features/todo/providers/todo_provider.dart';
 import 'package:flutter/material.dart';
-
-import '../../auth/helpers/auth_helper.dart';
-import '../../screens.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -11,16 +11,24 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () async {
-            final status = await AuthHelper.logout();
-            if (!status) return;
-
-            Navigator.of(context).pushNamedAndRemoveUntil(LoginScreen.id, (route) => false);
-          },
-          child: const Text("Sign out"),
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await context.read<TodoProvider>().addTodo(
+                Todo(task: "task", date: DateTime.now(), completed: false),
+              );
+        },
+      ),
+      body: Consumer<TodoProvider>(
+        builder: (context, todoProvider, child) {
+          return ListView.builder(
+            itemCount: todoProvider.todos.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(todoProvider.todos[index].task),
+              );
+            },
+          );
+        },
       ),
     );
   }
