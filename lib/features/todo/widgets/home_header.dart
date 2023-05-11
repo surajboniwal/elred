@@ -1,3 +1,5 @@
+import 'package:elred/features/auth/helpers/auth_helper.dart';
+import 'package:elred/features/auth/screens/login_screen.dart';
 import 'package:elred/features/todo/providers/todo_provider.dart';
 import 'package:elred/shared/extensions/list_todo.dart';
 import 'package:flutter/material.dart';
@@ -21,40 +23,62 @@ class HomeHeader extends StatelessWidget {
           colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.15), BlendMode.srcOver),
         ),
       ),
-      child: Center(
-        child: Row(
-          children: [
-            const Text(
-              "Your\nTodos",
-              style: TextStyle(
-                fontSize: 32.0,
-                color: Colors.white,
-                fontWeight: FontWeight.w300,
+      child: Stack(
+        children: [
+          Align(
+            alignment: Alignment.topRight,
+            child: GestureDetector(
+              onTap: () async {
+                await AuthHelper.logout();
+                Navigator.of(context).pushNamedAndRemoveUntil(LoginScreen.id, (route) => false);
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 16.0),
+                child: Text(
+                  "Sign out",
+                  style: TextStyle(
+                    color: Colors.white.withOpacity(0.8),
+                  ),
+                ),
               ),
             ),
-            const Spacer(),
-            Consumer<TodoProvider>(
-              builder: (context, provider, child) {
-                final todos = provider.todos;
-                final completedCount = todos.completed.length;
-                final pendingCount = todos.pending.length;
-                return Row(
-                  children: [
-                    HeaderCountBanner(
-                      label: pendingCount.toString(),
-                      sublabel: "Pending",
-                    ),
-                    const SizedBox(width: 12.0),
-                    HeaderCountBanner(
-                      label: completedCount.toString(),
-                      sublabel: "Completed",
-                    ),
-                  ],
-                );
-              },
+          ),
+          Center(
+            child: Row(
+              children: [
+                const Text(
+                  "Your\nTodos",
+                  style: TextStyle(
+                    fontSize: 32.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+                const Spacer(),
+                Consumer<TodoProvider>(
+                  builder: (context, provider, child) {
+                    final todos = provider.todos;
+                    final completedCount = todos.completed.length;
+                    final pendingCount = todos.pending.length;
+                    return Row(
+                      children: [
+                        HeaderCountBanner(
+                          label: pendingCount.toString(),
+                          sublabel: "Pending",
+                        ),
+                        const SizedBox(width: 12.0),
+                        HeaderCountBanner(
+                          label: completedCount.toString(),
+                          sublabel: "Completed",
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
