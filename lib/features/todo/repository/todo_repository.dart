@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../models/todo.dart';
 
@@ -14,28 +15,27 @@ class TodoRepository implements BaseTodoRepository {
 
   @override
   Future<void> createTodo(Todo todo) async {
-    final todos = firestore.collection('users').doc("suraj").collection('todos');
+    final userId = FirebaseAuth.instance.currentUser?.uid;
+    final todos = firestore.collection('users').doc(userId).collection('todos');
     await todos.doc(todo.id).set(todo.toMap());
   }
 
   @override
   Future<void> editTodo(Todo todo) async {
-    firestore
-        .collection('users')
-        .doc("suraj")
-        .collection('todos')
-        .doc(todo.id)
-        .update(todo.toMap());
+    final userId = FirebaseAuth.instance.currentUser?.uid;
+    firestore.collection('users').doc(userId).collection('todos').doc(todo.id).update(todo.toMap());
   }
 
   @override
   Future<List<Todo>> getTodos() async {
-    final todos = await firestore.collection('users').doc("suraj").collection('todos').get();
+    final userId = FirebaseAuth.instance.currentUser?.uid;
+    final todos = await firestore.collection('users').doc(userId).collection('todos').get();
     return todos.docs.map((e) => Todo.fromDocument(e)).toList();
   }
 
   @override
   Future<void> removeTodo(String id) async {
-    firestore.collection('users').doc("suraj").collection('todos').doc(id).delete();
+    final userId = FirebaseAuth.instance.currentUser?.uid;
+    firestore.collection('users').doc(userId).collection('todos').doc(id).delete();
   }
 }
