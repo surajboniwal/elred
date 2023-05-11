@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthHelper {
@@ -8,10 +9,32 @@ class AuthHelper {
   );
 
   static Future<bool> loginWithGoogle() async {
-    final account = await _googleSignIn.signIn();
+    try {
+      final account = await _googleSignIn.signIn();
 
-    if (account == null) return false;
+      if (account == null) return false;
 
-    return true;
+      final authentication = await account.authentication;
+
+      final creds = GoogleAuthProvider.credential(
+        accessToken: authentication.accessToken,
+        idToken: authentication.idToken,
+      );
+
+      FirebaseAuth.instance.signInWithCredential(creds);
+
+      return true;
+    } catch (err) {
+      return false;
+    }
+  }
+
+  static Future<bool> logout() async {
+    try {
+      FirebaseAuth.instance.signOut();
+      return true;
+    } catch (err) {
+      return false;
+    }
   }
 }

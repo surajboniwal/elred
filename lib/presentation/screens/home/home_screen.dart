@@ -1,5 +1,7 @@
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter/material.dart';
+
+import '../login/helpers/auth_helper.dart';
+import '../screens.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -8,6 +10,18 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () async {
+            final status = await AuthHelper.logout();
+            if (!status) return;
+
+            Navigator.of(context).pushNamedAndRemoveUntil(LoginScreen.id, (route) => false);
+          },
+          child: const Text("Sign out"),
+        ),
+      ),
+    );
   }
 }

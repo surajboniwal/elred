@@ -1,6 +1,7 @@
-import 'package:elred/presentation/screens/login/helpers/auth_helper.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:elred/presentation/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
+
+import './helpers/auth_helper.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -15,16 +16,14 @@ class LoginScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: () {
-                AuthHelper.loginWithGoogle();
+              onPressed: () async {
+                final status = await AuthHelper.loginWithGoogle();
+
+                if (!status) return;
+
+                Navigator.of(context).pushNamedAndRemoveUntil(HomeScreen.id, (route) => false);
               },
               child: const Text("Sign in with Google"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // AuthHelper.logout();
-              },
-              child: const Text("Sign out"),
             ),
           ],
         ),

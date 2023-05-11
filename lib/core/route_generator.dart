@@ -9,6 +9,9 @@ class RouteGenerator {
       case LoginScreen.id:
         child = const LoginScreen();
         break;
+      case HomeScreen.id:
+        child = const HomeScreen();
+        break;
       default:
         child = const Scaffold(
           body: Center(
