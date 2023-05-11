@@ -1,24 +1,25 @@
-import 'package:elred/core/route_generator.dart';
 import 'package:elred/presentation/screens/screens.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'elred.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp();
+
+  String initialRoute = LoginScreen.id;
+
+  if (isUserSignedIn) {
+    initialRoute = HomeScreen.id;
+  }
+
+  runApp(MyApp(initialRoute: initialRoute));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'elRed',
-      onGenerateRoute: RouteGenerator.onGenerateRoute,
-      initialRoute: SplashScreen.id,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      debugShowCheckedModeBanner: false,
-    );
-  }
+bool get isUserSignedIn {
+  final user = FirebaseAuth.instance.currentUser;
+  return user != null;
 }

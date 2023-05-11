@@ -9,9 +9,6 @@ class RouteGenerator {
       case LoginScreen.id:
         child = const LoginScreen();
         break;
-      case SplashScreen.id:
-        child = const SplashScreen();
-        break;
       default:
         child = const Scaffold(
           body: Center(
