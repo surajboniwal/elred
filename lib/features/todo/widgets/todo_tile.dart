@@ -32,6 +32,8 @@ class TodoTile extends StatelessWidget {
       ),
       title: Text(
         todo.task,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
         style: TextStyle(
           decoration: todo.completed ? TextDecoration.lineThrough : null,
           fontWeight: FontWeight.w600,
@@ -42,6 +44,8 @@ class TodoTile extends StatelessWidget {
           ? null
           : Text(
               todo.description,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 decoration: todo.completed ? TextDecoration.lineThrough : null,
               ),
