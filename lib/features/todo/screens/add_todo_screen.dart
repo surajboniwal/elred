@@ -183,7 +183,7 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
                             task: taskController.text,
                             description: descriptionController.text,
                             date: date,
-                            completed: false,
+                            completed: widget.todo?.completed ?? false,
                           ),
                         );
                   }
