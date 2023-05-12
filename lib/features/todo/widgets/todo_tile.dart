@@ -17,39 +17,64 @@ class TodoTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      onTap: () {
-        Navigator.of(context).pushNamed(AddTodoScreen.id, arguments: {
-          "todo": todo,
-        });
+    return Dismissible(
+      key: Key(todo.id ?? ""),
+      direction:
+          !todo.completed ? DismissDirection.endToStart : DismissDirection.none,
+      onDismissed: (_) {
+        context.read<TodoProvider>().updateTodo(
+              todo.copyWith(
+                completed: !todo.completed,
+              ),
+            );
       },
-      trailing: Text(
-        todo.date.formatted,
-        style: const TextStyle(color: Colors.grey, fontSize: 12.0),
-      ),
-      leading: TodoTileCheckbox(
-        todo: todo,
-      ),
-      title: Text(
-        todo.task,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: TextStyle(
-          decoration: todo.completed ? TextDecoration.lineThrough : null,
-          fontWeight: FontWeight.w600,
-          color: Colors.black87,
+      child: ListTile(
+        onTap: () {
+          Navigator.of(context).pushNamed(AddTodoScreen.id, arguments: {
+            "todo": todo,
+          });
+        },
+        trailing: Text(
+          todo.date.formatted,
+          style: const TextStyle(color: Colors.grey, fontSize: 12.0),
         ),
-      ),
-      subtitle: todo.description.isEmpty
-          ? null
-          : Text(
-              todo.description,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                decoration: todo.completed ? TextDecoration.lineThrough : null,
+        leading: CircleAvatar(
+          backgroundColor: Colors.grey.shade300,
+          child: Padding(
+            padding: const EdgeInsets.all(1.0),
+            child: CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: Image.asset(
+                  "assets/images/${todo.category.toLowerCase()}.png",
+                ),
               ),
             ),
+          ),
+        ),
+        title: Text(
+          todo.task,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            decoration: todo.completed ? TextDecoration.lineThrough : null,
+            fontWeight: FontWeight.w600,
+            color: Colors.black87,
+          ),
+        ),
+        subtitle: todo.description.isEmpty
+            ? null
+            : Text(
+                todo.description,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  decoration:
+                      todo.completed ? TextDecoration.lineThrough : null,
+                ),
+              ),
+      ),
     );
   }
 }
@@ -80,7 +105,8 @@ class TodoTileCheckbox extends StatelessWidget {
             backgroundColor: todo.completed ? AppColors.primary : Colors.grey,
             child: CircleAvatar(
               radius: 11.0,
-              backgroundColor: todo.completed ? AppColors.primary : Colors.white,
+              backgroundColor:
+                  todo.completed ? AppColors.primary : Colors.white,
               child: const Icon(
                 Icons.done,
                 size: 16.0,

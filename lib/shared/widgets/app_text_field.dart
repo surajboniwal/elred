@@ -70,6 +70,22 @@ class AppTextField extends StatelessWidget {
           errorStyle: const TextStyle(
             color: Colors.amber,
           ),
+          suffix: onTap != null
+              ? null
+              : GestureDetector(
+                  onTap: () {
+                    controller.clear();
+                  },
+                  child: CircleAvatar(
+                    backgroundColor: Colors.white.withOpacity(0.4),
+                    radius: 10,
+                    child: const Icon(
+                      Icons.close,
+                      size: 12.0,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
         ),
         style: const TextStyle(
           color: Colors.white,

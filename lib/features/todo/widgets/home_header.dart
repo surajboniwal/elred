@@ -21,7 +21,8 @@ class HomeHeader extends StatelessWidget {
         image: DecorationImage(
           image: const AssetImage("assets/images/mountain.jpg"),
           fit: BoxFit.cover,
-          colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.15), BlendMode.srcOver),
+          colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.15), BlendMode.srcOver),
         ),
       ),
       child: Stack(
@@ -33,10 +34,12 @@ class HomeHeader extends StatelessWidget {
                 await AuthHelper.logout();
                 GetIt.I.reset();
                 context.read<TodoProvider>().clearState();
-                Navigator.of(context).pushNamedAndRemoveUntil(LoginScreen.id, (route) => false);
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil(LoginScreen.id, (route) => false);
               },
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 16.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 0.0, vertical: 16.0),
                 child: Text(
                   "Sign out",
                   style: TextStyle(
@@ -55,6 +58,7 @@ class HomeHeader extends StatelessWidget {
                     fontSize: 32.0,
                     color: Colors.white,
                     fontWeight: FontWeight.w300,
+                    height: 1,
                   ),
                 ),
                 const Spacer(),

@@ -4,6 +4,7 @@ import 'package:elred/shared/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../shared/widgets/app_dropdown.dart';
 import '../../../shared/widgets/app_text_field.dart';
 import '../providers/todo_provider.dart';
 import '../widgets/delete_confirmation_dialog.dart';
@@ -28,6 +29,8 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
   late final TextEditingController dateController;
   late DateTime date;
 
+  final category = ValueNotifier<String?>(null);
+
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -35,16 +38,24 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
     super.initState();
 
     taskController = TextEditingController(text: widget.todo?.task);
-    descriptionController = TextEditingController(text: widget.todo?.description);
+    descriptionController =
+        TextEditingController(text: widget.todo?.description);
     dateController = TextEditingController(
-      text: widget.todo?.date == null ? DateTime.now().formatted : widget.todo?.date.formatted,
+      text: widget.todo?.date == null
+          ? DateTime.now().formatted
+          : widget.todo?.date.formatted,
     );
     date = widget.todo?.date ?? DateTime.now();
+    if (widget.todo?.category != null) category.value = widget.todo?.category;
   }
 
   @override
   void dispose() {
     super.dispose();
+
+    taskController.dispose();
+    descriptionController.dispose();
+    dateController.dispose();
   }
 
   @override
@@ -85,11 +96,14 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
                         onTap: () async {
                           final delete = await showDialog(
                             context: context,
-                            builder: (context) => const DeleteConfirmationDialog(),
+                            builder: (context) =>
+                                const DeleteConfirmationDialog(),
                           );
 
                           if (delete == true) {
-                            await context.read<TodoProvider>().deleteTodo(widget.todo!);
+                            await context
+                                .read<TodoProvider>()
+                                .deleteTodo(widget.todo!);
                             Navigator.of(context).pop();
                           }
                         },
@@ -124,6 +138,11 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
                 key: formKey,
                 child: Column(
                   children: [
+                    AppDropdown(
+                      notifier: category,
+                      hint: "Category",
+                    ),
+                    const SizedBox(height: 12.0),
                     AppTextField(
                       controller: taskController,
                       hint: "Task",
@@ -174,6 +193,7 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
                             description: descriptionController.text,
                             date: date,
                             completed: false,
+                            category: category.value ?? "",
                           ),
                         );
                   } else {
@@ -184,6 +204,7 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
                             description: descriptionController.text,
                             date: date,
                             completed: widget.todo?.completed ?? false,
+                            category: category.value ?? "",
                           ),
                         );
                   }
